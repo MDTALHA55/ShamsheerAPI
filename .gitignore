@@ -361,5 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/ShamsheerAPI/Program.cs
+/ShamsheerAPI/Middleware/ExceptionHandlingMiddleware.cs
+FodyWeavers.xsd
 /ShamsheerAPI/appsettings.json
 /ShamsheerAPI/Middleware/ExceptionHandlingMiddleware.cs
