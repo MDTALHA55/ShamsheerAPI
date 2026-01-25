@@ -37,7 +37,6 @@ namespace ShamsheerAPI.Repositories
 
 
 
-
         public string InsertCoupon(CouponDTO cObj)
         {
             DataTable table = new DataTable();
