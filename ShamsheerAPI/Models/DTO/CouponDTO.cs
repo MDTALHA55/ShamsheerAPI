@@ -8,11 +8,15 @@ namespace ShamsheerAPI.Models.DTO
         public string shamkey { get; set; }
 
         public Int64? id { get; set; }
+        public Int64? cdid { get; set; }
         public Int64? coupon_id { get; set; }
+        public Int64? cid { get; set; }
         public Int64? reg_id { get; set; }
         public decimal coupon_amount { get; set; }
         public Int64? coupon_count { get; set; }
         public string? coupon_name { get; set; }
+        public string? c_url { get; set; }
+        
         public Boolean active { get; set; }
         public string? created_by { get; set; }
         public DateTime? created_at { get; set; }
@@ -23,6 +27,8 @@ namespace ShamsheerAPI.Models.DTO
         
         
         public string? coupon_url { get; set; }
+        public string? coupon_qr { get; set; }
+        public Boolean status { get; set; }
         
         public DateTime? expire_at { get; set; }
 

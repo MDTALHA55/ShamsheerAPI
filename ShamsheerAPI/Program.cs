@@ -35,6 +35,10 @@ builder.Services.AddCors(
 );
 
 builder.Services.AddScoped<ICoupon, Coupon>();
+builder.Services.AddScoped<ICouponDetail, CouponDetail>();
+builder.Services.AddScoped<ICouponDEMO, CouponDEMO>();
+builder.Services.AddScoped<ICouponDetailDEMO, CouponDetailDEMO>();
+builder.Services.AddScoped<ICouponDetailQR, CouponDetailQR>();
 
 builder.Services.AddHttpClient();
 var app = builder.Build();

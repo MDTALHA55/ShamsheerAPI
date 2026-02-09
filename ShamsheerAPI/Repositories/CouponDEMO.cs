@@ -5,7 +5,7 @@ using System.Data;
 
 namespace ShamsheerAPI.Repositories
 {
-    public class Coupon(IConfiguration configuration) : ICoupon
+    public class CouponDEMO(IConfiguration configuration) : ICouponDEMO
     {
         private string connectionString = configuration.GetConnectionString("SHAM_CS");
         public JsonResult GetAll(string shamkey, Int64? id,string? type)
@@ -16,7 +16,7 @@ namespace ShamsheerAPI.Repositories
             using (SqlConnection connection = new SqlConnection(sqlDataSource))
             {
 
-                using (SqlCommand command = new SqlCommand("coupon_mtbl_get", connection))
+                using (SqlCommand command = new SqlCommand("coupon_mtbl_getDEMO", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     #region parameters
@@ -45,14 +45,15 @@ namespace ShamsheerAPI.Repositories
             string sqlDataSource = connectionString;
             using (SqlConnection connection = new SqlConnection(sqlDataSource))
             {
-                using (SqlCommand command = new SqlCommand("coupon_mtbl_insert", connection))
+                using (SqlCommand command = new SqlCommand("coupon_mtbl_insertDEMO", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     #region parameters
                     command.Parameters.AddWithValue("@shamkey", cObj.shamkey);
+                    command.Parameters.AddWithValue("@coupon_name", cObj.coupon_amount);
                     command.Parameters.AddWithValue("@coupon_amount", cObj.coupon_amount);
                     command.Parameters.AddWithValue("@coupon_count", cObj.coupon_count);
-                    command.Parameters.AddWithValue("@coupon_name", cObj.coupon_name);
+                    command.Parameters.AddWithValue("@coupon_url", cObj.coupon_url);
                     command.Parameters.AddWithValue("@active", cObj.active);
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -75,7 +76,7 @@ namespace ShamsheerAPI.Repositories
             using (SqlConnection connection = new SqlConnection(sqlDataSource))
             {
 
-                using (SqlCommand command = new SqlCommand("coupon_mtbl_update", connection))
+                using (SqlCommand command = new SqlCommand("coupon_mtbl_updateDEMO", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     #region parameters
@@ -84,7 +85,8 @@ namespace ShamsheerAPI.Repositories
                     command.Parameters.AddWithValue("@coupon_amount", cObj.coupon_amount);
                     command.Parameters.AddWithValue("@coupon_count", cObj.coupon_count);
                     command.Parameters.AddWithValue("@coupon_name", cObj.coupon_name);
-                    command.Parameters.AddWithValue("@active", cObj.active);
+					command.Parameters.AddWithValue("@coupon_url", cObj.coupon_url);
+					command.Parameters.AddWithValue("@active", cObj.active);
                    
 
 
@@ -107,7 +109,7 @@ namespace ShamsheerAPI.Repositories
             string sqlDataSource = connectionString;
             using (SqlConnection connection = new SqlConnection(sqlDataSource))
             {
-                using (SqlCommand command = new SqlCommand("coupon_mtbl_delete", connection))
+                using (SqlCommand command = new SqlCommand("coupon_mtbl_deleteDEMO", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     #region parameters
