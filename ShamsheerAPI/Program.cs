@@ -39,6 +39,8 @@ builder.Services.AddScoped<ICouponDetail, CouponDetail>();
 builder.Services.AddScoped<ICouponDEMO, CouponDEMO>();
 builder.Services.AddScoped<ICouponDetailDEMO, CouponDetailDEMO>();
 builder.Services.AddScoped<ICouponDetailQR, CouponDetailQR>();
+builder.Services.AddScoped<ICustomerUPIDetail, CustomerUPIDetail>();
+builder.Services.AddScoped<ICouponBadge, CouponBadge>();
 
 builder.Services.AddHttpClient();
 var app = builder.Build();

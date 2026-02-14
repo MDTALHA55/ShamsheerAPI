@@ -16,7 +16,7 @@ namespace ShamsheerAPI.Repositories
             using (SqlConnection connection = new SqlConnection(sqlDataSource))
             {
 
-                using (SqlCommand command = new SqlCommand("coupon_mtbl_getDEMO", connection))
+                using (SqlCommand command = new SqlCommand("coupon_mtbl_get", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     #region parameters
@@ -45,12 +45,12 @@ namespace ShamsheerAPI.Repositories
             string sqlDataSource = connectionString;
             using (SqlConnection connection = new SqlConnection(sqlDataSource))
             {
-                using (SqlCommand command = new SqlCommand("coupon_mtbl_insertDEMO", connection))
+                using (SqlCommand command = new SqlCommand("coupon_mtbl_insert", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     #region parameters
                     command.Parameters.AddWithValue("@shamkey", cObj.shamkey);
-                    command.Parameters.AddWithValue("@coupon_name", cObj.coupon_amount);
+                    command.Parameters.AddWithValue("@coupon_name", cObj.coupon_name);
                     command.Parameters.AddWithValue("@coupon_amount", cObj.coupon_amount);
                     command.Parameters.AddWithValue("@coupon_count", cObj.coupon_count);
                     command.Parameters.AddWithValue("@coupon_url", cObj.coupon_url);
@@ -76,7 +76,7 @@ namespace ShamsheerAPI.Repositories
             using (SqlConnection connection = new SqlConnection(sqlDataSource))
             {
 
-                using (SqlCommand command = new SqlCommand("coupon_mtbl_updateDEMO", connection))
+                using (SqlCommand command = new SqlCommand("coupon_mtbl_update", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     #region parameters
@@ -109,7 +109,7 @@ namespace ShamsheerAPI.Repositories
             string sqlDataSource = connectionString;
             using (SqlConnection connection = new SqlConnection(sqlDataSource))
             {
-                using (SqlCommand command = new SqlCommand("coupon_mtbl_deleteDEMO", connection))
+                using (SqlCommand command = new SqlCommand("coupon_mtbl_delete", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     #region parameters

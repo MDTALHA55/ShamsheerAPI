@@ -1,7 +1,10 @@
-﻿using ShamsheerAPI.Models.DTO;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using QRCoder;
+using ShamsheerAPI.Models.DTO;
 using System.Data;
+using System.Security.Cryptography;
+using static QRCoder.PayloadGenerator;
 
 namespace ShamsheerAPI.Repositories
 {
@@ -16,7 +19,7 @@ namespace ShamsheerAPI.Repositories
             using (SqlConnection connection = new SqlConnection(sqlDataSource))
             {
 
-                using (SqlCommand command = new SqlCommand("coupon_detail_tbl_getDEMO", connection))
+                using (SqlCommand command = new SqlCommand("coupon_detail_tbl_get", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     #region parameters
@@ -40,22 +43,33 @@ namespace ShamsheerAPI.Repositories
 
         public string InsertCouponDetail(CouponDTO cObj)
         {
+            //// var qrpath = `${c_url}/Payment_Detail.html?id=${id}&cid=${cid}`;
             DataTable table = new DataTable();
+            string QrCode = "";
+            if (cObj.curl !="" && cObj.cdid != 0)
+            {
+                string qrpath = $"{cObj.curl}/Payment_Detail.html?id={cObj.cdid}&cid={cObj.cid}";
+                QrCode = GeneratePaymentQR(qrpath);
+            }
+            else
+            {
+                return "Faild";
+            }
 
 
             string sqlDataSource = connectionString;
             using (SqlConnection connection = new SqlConnection(sqlDataSource))
             {
-                using (SqlCommand command = new SqlCommand("coupon_QR_tbl_insertDEMO", connection))
+                using (SqlCommand command = new SqlCommand("coupon_QR_tbl_insert", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     #region parameters
                     command.Parameters.AddWithValue("@shamkey", cObj.shamkey);
                     command.Parameters.AddWithValue("@cdid", cObj.cdid);
-                    command.Parameters.AddWithValue("@cid", cObj.cid);
-                  
-                    command.Parameters.AddWithValue("@coupon_url", cObj.coupon_url);
-                    command.Parameters.AddWithValue("@coupon_qr", cObj.coupon_qr);
+                    command.Parameters.AddWithValue("@coupon_id", cObj.cid);                  
+                    command.Parameters.AddWithValue("@coupon_url", cObj.curl);
+                    command.Parameters.AddWithValue("@coupon_qr", QrCode);
+                    command.Parameters.AddWithValue("@badge_id", cObj.bid);
                     
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -69,6 +83,24 @@ namespace ShamsheerAPI.Repositories
             return "successful";
         }
 
+        public string GeneratePaymentQR(string qrpath)
+        {
+            string QrCode = "";
+
+            using (QRCodeGenerator qrGenerator = new QRCodeGenerator())
+            using (QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrpath, QRCodeGenerator.ECCLevel.Q))
+            using (PngByteQRCode qrCode = new PngByteQRCode(qrCodeData))
+            {
+                byte[] qrCodeImage = qrCode.GetGraphic(20);
+                string base64String = Convert.ToBase64String(qrCodeImage);
+                QrCode = $"data:image/png;base64,{base64String}";
+
+
+            }
+
+
+            return QrCode;
+        }
         public string UpdateCouponDetail(CouponDTO cObj)
         {
             DataTable table = new DataTable();
@@ -78,7 +110,7 @@ namespace ShamsheerAPI.Repositories
             using (SqlConnection connection = new SqlConnection(sqlDataSource))
             {
 
-                using (SqlCommand command = new SqlCommand("coupon_detail_tbl_updateDEMO", connection))
+                using (SqlCommand command = new SqlCommand("coupon_detail_tbl_update", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     #region parameters
@@ -113,7 +145,7 @@ namespace ShamsheerAPI.Repositories
             string sqlDataSource = connectionString;
             using (SqlConnection connection = new SqlConnection(sqlDataSource))
             {
-                using (SqlCommand command = new SqlCommand("coupon_detail_tbl_deleteDEMO", connection))
+                using (SqlCommand command = new SqlCommand("coupon_detail_tbl_delete", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     #region parameters

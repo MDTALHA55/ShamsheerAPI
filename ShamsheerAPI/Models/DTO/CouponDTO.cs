@@ -11,11 +11,13 @@ namespace ShamsheerAPI.Models.DTO
         public Int64? cdid { get; set; }
         public Int64? coupon_id { get; set; }
         public Int64? cid { get; set; }
+        public Int64? bid { get; set; }
         public Int64? reg_id { get; set; }
         public decimal coupon_amount { get; set; }
         public Int64? coupon_count { get; set; }
         public string? coupon_name { get; set; }
         public string? c_url { get; set; }
+        public string? curl { get; set; }
         
         public Boolean active { get; set; }
         public string? created_by { get; set; }
